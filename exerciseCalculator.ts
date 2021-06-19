@@ -25,32 +25,38 @@ const parseArguments = (args: Array<string>):number[] => {
 
 const calculateExercise = (arr: number[]): resultObject => {
     arr.shift()
-    console.log('0',arr[0])
     const target = arr[0]
-    arr.shift()
-    const trainingDays = arr.filter(a => a !== 0)
-    const average = arr.reduce((total, amount, index, arr) => {
+    const exerciseArray = arr.filter( (a,index) => index !== 0)
+    const trainingDays = exerciseArray.filter(a => a !== 0)
+    const average = exerciseArray.reduce((total, amount, index, exerciseArray) => {
         total += amount;
-        if (index === arr.length - 1) {
-            return total / (arr.length);
+        if (index === exerciseArray.length - 1) {
+            return total / (exerciseArray.length);
         } else {
             return total;
         }
     }
     );
-    const rating = Math.ceil((average/(target)))
+    const percentRating = (average / target )*100;
+
+    let rating = 0;
+  
     const ratingDescription = () => {
-        if (rating < 1) {
+        if (percentRating < 60) {
+            rating = 1;
             return 'Not good enough need to work harder'
         }
-        else if (rating <= 2) {
+        else if (percentRating >=60 && percentRating <= 80) {
+            rating = 2;
             return 'Ok, but you can still do better'
         }
-        else return 'Perfect, keep it going'
+        else 
+        rating = 3
+        return 'Perfect, keep it going'
     }
     
     const result = {
-        periodLength: arr.length,
+        periodLength: exerciseArray.length,
         trainingDays: trainingDays.length,
         success: true ? target < average : false,
         ratingDescription: ratingDescription(),
