@@ -9,29 +9,26 @@ interface resultObject {
 }
 
 
-const parseArguments = (args: Array<string>):number[] => {
-    if (args.length < 3) throw new Error('Not enough arguments')
-    const validArguments = args.map(arg => Number(arg))
-    const isvalidArguments = args.filter(ar => isNaN(Number(ar)))
-   if (isvalidArguments.length <= 2){
-       return validArguments
-   }
-   else {
-       throw new Error('Provided value were not numbers')
-   }
+// const parseArguments = (args: Array<string>):number[] => {
+//     if (args.length < 3) throw new Error('Not enough arguments')
+//     const validArguments = args.map(arg => Number(arg))
+//     const isvalidArguments = args.filter(ar => isNaN(Number(ar)))
+//    if (isvalidArguments.length <= 2){
+//        return validArguments
+//    }
+//    else {
+//        throw new Error('Provided value were not numbers')
+//    }
     
 
-}
+// }
 
-const calculateExercise = (arr: number[]): resultObject => {
-    arr.shift()
-    const target = arr[0]
-    const exerciseArray = arr.filter( (a,index) => index !== 0)
-    const trainingDays = exerciseArray.filter(a => a !== 0)
-    const average = exerciseArray.reduce((total, amount, index, exerciseArray) => {
+ export const calculateExercise = (arr: number[],target:number): resultObject => {
+    const trainingDays = arr.filter(a => a !== 0)
+    const average = arr.reduce((total, amount, index, arr) => {
         total += amount;
-        if (index === exerciseArray.length - 1) {
-            return total / (exerciseArray.length);
+        if (index === arr.length - 1) {
+            return total / (arr.length);
         } else {
             return total;
         }
@@ -56,7 +53,7 @@ const calculateExercise = (arr: number[]): resultObject => {
     }
     
     const result = {
-        periodLength: exerciseArray.length,
+        periodLength: arr.length,
         trainingDays: trainingDays.length,
         success: true ? target < average : false,
         ratingDescription: ratingDescription(),
@@ -68,12 +65,12 @@ const calculateExercise = (arr: number[]): resultObject => {
     return result
 }
 
-try {
-    const  validArguments  = parseArguments(process.argv)
-    validArguments.shift()
-    calculateExercise(validArguments)
+// try {
+//     const  validArguments  = parseArguments(process.argv)
+//     validArguments.shift()
+//     calculateExercise(validArguments)
     
-} catch (error) {
-    console.log('error',error.message)
-}
+// } catch (error) {
+//     console.log('error',error.message)
+// }
 
