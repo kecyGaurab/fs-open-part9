@@ -1,5 +1,5 @@
-const bmiCalculator = (mass:number,height:number) => {
-    const bmi = mass/(height**2)
+export const bmiCalculator = (mass:number,height:number) => {
+    const bmi = mass/Math.pow(height,2)
     let text
     switch (true) {
         case (bmi < 18.5):
